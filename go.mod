@@ -1,3 +1,3 @@
-module github.com/aaronangxz/XZTrainingGround
+module github.com/aaronangxz/TrainingGround
 
 go 1.17

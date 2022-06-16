@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/aaronangxz/XZTrainingGround/common"
+	"github.com/aaronangxz/TrainingGround/common"
 )
 
 func RunSelectionSort() {

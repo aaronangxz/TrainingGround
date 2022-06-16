@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/aaronangxz/XZTrainingGround/common"
+	"github.com/aaronangxz/TrainingGround/common"
 )
 
 func dfs(i int, nums []int, out *[][]int) {
