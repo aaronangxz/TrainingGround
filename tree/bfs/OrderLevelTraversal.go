@@ -25,7 +25,7 @@ func OrderLevelTraversal(root *common.TreeNode) [][]int {
 		//loop through all the remaining nodes in the queue (not those new nodes that are being enqueued now)
 		for i := 0; i < size; i++ {
 			//retrieve the front node
-			node := q.Front().(*common.TreeNode)
+			node := q.Front().(common.TreeNode)
 			q.Dequeue()
 			//put into level order result
 			levelResult = append(levelResult, node.Val)
