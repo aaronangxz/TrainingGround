@@ -33,5 +33,4 @@ func BFS(root *common.TreeNode) []*common.TreeNode {
 		q.Dequeue()
 	}
 	return out
-
 }

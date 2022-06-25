@@ -22,3 +22,10 @@ func MakeSortedSlice(size int) []int {
 	sort.Ints(s)
 	return s
 }
+
+func Max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}

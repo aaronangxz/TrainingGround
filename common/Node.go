@@ -1,8 +1,8 @@
 package common
 
 type Node struct {
-	data interface{}
-	next *Node
+	Data interface{}
+	Next *Node
 }
 
 func NewNode(d interface{}) *Node {

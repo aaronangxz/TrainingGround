@@ -3,7 +3,7 @@ package dfs
 import "github.com/aaronangxz/TrainingGround/common"
 
 func RecursiveDFS(root *common.TreeNode) []*common.TreeNode {
-	visited := []*common.TreeNode{}
+	var visited []*common.TreeNode
 	return recurse(root, visited)
 }
 
@@ -28,7 +28,7 @@ func IterativeDfs(root *common.TreeNode) []*common.TreeNode {
 	s.Push(root)
 
 	//Keep track of visited nodes
-	visited := []*common.TreeNode{}
+	var visited []*common.TreeNode
 
 	//Continue as long as stack is not empty
 	for !s.IsEmpty() {

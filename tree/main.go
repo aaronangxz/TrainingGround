@@ -20,18 +20,23 @@ func main() {
 	root.Right.Left = common.NewTreeNode(6)
 	root.Right.Right = common.NewTreeNode(7)
 
+	fmt.Println("BFS")
 	b := bfs.BFS(root)
 	for _, element := range b {
 		fmt.Print(element.Val)
 	}
-	fmt.Println()
+	fmt.Println("RecursiveDFS")
 	d := dfs.RecursiveDFS(root)
 	for _, element := range d {
 		fmt.Print(element.Val)
 	}
-	fmt.Println()
+	fmt.Println("IterativeDfs")
 	dI := dfs.IterativeDfs(root)
 	for _, element := range dI {
 		fmt.Print(element.Val)
 	}
+
+	fmt.Println("Order Level Traversal")
+	oL := bfs.OrderLevelTraversal(root)
+	fmt.Println(oL)
 }
