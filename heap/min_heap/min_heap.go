@@ -46,18 +46,15 @@ func (m *MinHeap) InsertKey(item int) {
 	//m.heapifyUp(m.Size - 1)
 	for i != 0 && (*m.HeapArray)[i] < (*m.HeapArray)[m.parent(i)] {
 		m.swap(i, m.parent(i))
-		//common.Swap(&(*m.HeapArray)[i], &(*m.HeapArray)[m.parent(i)])
 		i = m.parent(i)
 	}
 }
 
 func (m *MinHeap) decreaseKey(i int, newValue int) {
-	//log.Printf("Increasing %v to max", (*m.HeapArray)[i])
 	(*m.HeapArray)[i] = newValue
 	//m.heapifyUp(i)
 	for i != 0 && (*m.HeapArray)[i] < (*m.HeapArray)[m.parent(i)] {
 		m.swap(i, m.parent(i))
-		//common.Swap(&(*m.HeapArray)[i], &(*m.HeapArray)[m.parent(i)])
 		i = m.parent(i)
 	}
 }
@@ -85,9 +82,7 @@ func (m *MinHeap) ExtractMin() int {
 	//Then move the last element to root
 	//Perform heapify from root
 	root := (*m.HeapArray)[0]
-	//log.Println("Remove:", root)
 	(*m.HeapArray)[0] = (*m.HeapArray)[m.Size-1]
-	//log.Println("Move to root:", (*m.HeapArray)[m.Size-1])
 	*m.HeapArray = (*m.HeapArray)[:(m.Size - 1)]
 	m.Size--
 	m.minHeapify(0)
@@ -98,7 +93,6 @@ func (m *MinHeap) ExtractMin() int {
 func (m *MinHeap) heapifyUp(index int) {
 	for index != 0 && (*m.HeapArray)[index] < (*m.HeapArray)[m.parent(index)] {
 		m.swap(index, m.parent(index))
-		//common.Swap(&(*m.HeapArray)[index], &(*m.HeapArray)[m.parent(index)])
 		index = m.parent(index)
 	}
 }
@@ -120,7 +114,6 @@ func (m *MinHeap) minHeapify(i int) {
 
 	if smallest != i {
 		m.swap(i, smallest)
-		//common.Swap(&(*m.HeapArray)[i], &(*m.HeapArray)[smallest])
 		m.minHeapify(smallest)
 	}
 }
