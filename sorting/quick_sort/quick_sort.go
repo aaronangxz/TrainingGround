@@ -69,9 +69,9 @@ func quickSortStart(s []int) []int {
 	return quickSort(s, low, high)
 }
 
-func quickSortV2(s []int) []int {
+func quickSortV2(s []int) {
 	if len(s) < 2 {
-		return s
+		return
 	}
 
 	low, high := 0, len(s)-1
@@ -97,13 +97,12 @@ func quickSortV2(s []int) []int {
 	//sort left and right partition, excluding sorted position
 	quickSortV2(s[:low])
 	quickSortV2(s[low+1:])
-
-	return s
 }
 
 func main() {
 	s := common.MakeSlice(50)
 	fmt.Println(s)
 	//fmt.Println(quickSortStart(s))
-	fmt.Println(quickSortV2(s))
+	quickSortV2(s)
+	fmt.Println(s)
 }
