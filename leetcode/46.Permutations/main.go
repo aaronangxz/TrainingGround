@@ -13,6 +13,7 @@ func dfs(i int, nums []int, out *[][]int) {
 		*out = append(*out, c)
 	}
 
+	//swap digits, and go one more level down until we exhaust the array elements
 	for j := i; j < len(nums); j++ {
 		common.Swap(&nums[i], &nums[j])
 		dfs(i+1, nums, out)
