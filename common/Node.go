@@ -19,4 +19,25 @@ func (n *Node) PrintNodes() {
 		fmt.Print(n.Data)
 		n = n.Next
 	}
+	fmt.Println()
+}
+
+func NewNodeFromSlice(d []int) *Node {
+	if len(d) == 0 {
+		return nil
+	}
+
+	head := NewNode(d[0])
+
+	if len(d) == 1 {
+		return head
+	}
+
+	curr := head
+	for i := 1; i < len(d); i++ {
+		n := NewNode(d[i])
+		curr.Next = n
+		curr = curr.Next
+	}
+	return head
 }
