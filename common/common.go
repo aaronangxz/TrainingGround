@@ -29,3 +29,16 @@ func Max(a, b int) int {
 	}
 	return b
 }
+
+func Min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func ReverseSlice(s *[]int, start, end int) {
+	for i, j := start, end; i < j; i, j = i+1, j-1 {
+		(*s)[i], (*s)[j] = (*s)[j], (*s)[i]
+	}
+}
