@@ -13,7 +13,7 @@ func nextGreaterElement(n int) int {
 		elements = append(elements, n%10)
 		n /= 10
 	}
-	common.ReverseSlice(&elements, 0, len(elements)-1)
+	common.ReverseSliceRange(&elements, 0, len(elements)-1)
 
 	i := len(elements) - 2
 
@@ -43,7 +43,7 @@ func nextGreaterElement(n int) int {
 
 	//reverse all elements after i
 	//the subarray after i should be in decreasing order, so we just have to reverse it inctead of sorting it ASC
-	common.ReverseSlice(&elements, i+1, len(elements)-1)
+	common.ReverseSliceRange(&elements, i+1, len(elements)-1)
 
 	//convert back to int
 	res := 0

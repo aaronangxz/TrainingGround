@@ -37,7 +37,11 @@ func Min(a, b int) int {
 	return b
 }
 
-func ReverseSlice(s *[]int, start, end int) {
+func ReverseSlice(s *[]int) {
+	ReverseSliceRange(s, 0, len(*s)-1)
+}
+
+func ReverseSliceRange(s *[]int, start, end int) {
 	for i, j := start, end; i < j; i, j = i+1, j-1 {
 		(*s)[i], (*s)[j] = (*s)[j], (*s)[i]
 	}
