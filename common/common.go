@@ -12,6 +12,17 @@ func Swap(a *int, b *int) {
 	*b = tmp
 }
 
+func MakeRandomIntKVMap(size int) map[int]int {
+	key := MakeSlice(size)
+	val := MakeSlice(size * 1000)
+	m := make(map[int]int)
+
+	for i, k := range key {
+		m[k] = val[i]
+	}
+	return m
+}
+
 func MakeSlice(size int) []int {
 	rand.Seed(time.Now().UnixNano())
 	return rand.Perm(size)

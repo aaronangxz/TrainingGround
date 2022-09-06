@@ -10,6 +10,7 @@ func main() {
 	insertion(m)
 	get(m)
 	batchCreate()
+	batchCreateWithRandom()
 }
 
 func batchCreate() {
@@ -20,6 +21,12 @@ func batchCreate() {
 	maps[69] = 9999
 	maps[999] = 10000
 	m := common.NewHashMapFromSlice(maps)
+	m.PrintHashMap()
+}
+
+func batchCreateWithRandom() {
+	mm := common.MakeRandomIntKVMap(10)
+	m := common.NewHashMapFromSlice(mm)
 	m.PrintHashMap()
 }
 
