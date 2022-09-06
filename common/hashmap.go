@@ -60,9 +60,7 @@ func (h *HashMap) Insert(key, value int) {
 func (h *HashMap) Get(key int) int {
 	k := h.hashFunction(key)
 
-	if h.Table[k] == nil {
-		return -1
-	} else {
+	if h.Table[k] != nil {
 		curr := h.Table[k]
 		for curr.Next != nil {
 			if curr.Key == key {
