@@ -55,6 +55,7 @@ func (h *HashMap) Insert(key, value int) {
 		}
 		curr.Next = NewHashNode(key, value)
 	}
+	h.Size++
 }
 
 func (h *HashMap) Get(key int) int {
@@ -76,6 +77,7 @@ func (h *HashMap) Delete(key int) {
 	k := h.hashFunction(key)
 
 	if h.Table[k].Key == key {
+		h.Size--
 		h.Table[k] = h.Table[k].Next
 		return
 	}
@@ -87,6 +89,7 @@ func (h *HashMap) Delete(key int) {
 		}
 		curr = curr.Next
 	}
+	h.Size--
 }
 
 func (h *HashMap) PrintHashMap() {
