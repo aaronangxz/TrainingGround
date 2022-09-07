@@ -1,6 +1,8 @@
 package min_heap
 
 import (
+	"github.com/aaronangxz/TrainingGround/common"
+	"log"
 	"math"
 )
 
@@ -31,7 +33,9 @@ func (m *MinHeap) right(index int) int {
 }
 
 func (m *MinHeap) swap(first, second int) {
-	(*m.HeapArray)[first], (*m.HeapArray)[second] = (*m.HeapArray)[second], (*m.HeapArray)[first]
+	if err := common.SwapAny(&(*m.HeapArray)[first], &(*m.HeapArray)[second]); err != nil {
+		log.Fatal(err.Error())
+	}
 }
 
 func (m *MinHeap) InsertKey(item int) {
@@ -43,7 +47,6 @@ func (m *MinHeap) InsertKey(item int) {
 	m.Size++
 	i := m.Size - 1
 
-	//m.heapifyUp(m.Size - 1)
 	for i != 0 && (*m.HeapArray)[i] < (*m.HeapArray)[m.parent(i)] {
 		m.swap(i, m.parent(i))
 		i = m.parent(i)
@@ -52,7 +55,6 @@ func (m *MinHeap) InsertKey(item int) {
 
 func (m *MinHeap) decreaseKey(i int, newValue int) {
 	(*m.HeapArray)[i] = newValue
-	//m.heapifyUp(i)
 	for i != 0 && (*m.HeapArray)[i] < (*m.HeapArray)[m.parent(i)] {
 		m.swap(i, m.parent(i))
 		i = m.parent(i)
@@ -80,13 +82,12 @@ func (m *MinHeap) ExtractMin() int {
 
 	//Remove min from heap
 	//Then move the last element to root
-	//Perform heapify from root
+	//Perform heap-ify from root
 	root := (*m.HeapArray)[0]
 	(*m.HeapArray)[0] = (*m.HeapArray)[m.Size-1]
 	*m.HeapArray = (*m.HeapArray)[:(m.Size - 1)]
 	m.Size--
 	m.minHeapify(0)
-	//log.Println("New root:", (*m.HeapArray)[0])
 	return root
 }
 
@@ -97,8 +98,8 @@ func (m *MinHeap) heapifyUp(index int) {
 	}
 }
 
-// A recursive method to heapify a subtree with the root at given index
-// This method assumes that the subtrees are already heapified
+// A recursive method to heap-ify a subtree with the root at given index
+// This method assumes that the subtrees are already heap-ified
 func (m *MinHeap) minHeapify(i int) {
 	l := m.left(i)
 	r := m.right(i)

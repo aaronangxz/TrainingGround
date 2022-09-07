@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/aaronangxz/TrainingGround/common"
 )
@@ -17,7 +18,9 @@ func BubbleSort(slice []int) {
 	for i := 0; i < len(slice); i++ {
 		for j := 0; j < len(slice)-i-1; j++ {
 			if slice[j] > slice[j+1] {
-				common.Swap(&slice[j], &slice[j+1])
+				if err := common.SwapAny(&slice[j], &slice[j+1]); err != nil {
+					log.Fatal(err.Error())
+				}
 			}
 		}
 	}
@@ -30,17 +33,16 @@ func BubbleSortOptimized(slice []int) {
 	swapped := false
 	for i := 0; i < len(slice); i++ {
 		for j := 0; j < len(slice)-i-1; j++ {
-			//log.Printf("Checking %v %v\n", slice[j], slice[j+1])
 			if slice[j] > slice[j+1] {
-				//log.Printf("Swapping %v %v\n", slice[j], slice[j+1])
-				common.Swap(&slice[j], &slice[j+1])
+				if err := common.SwapAny(&slice[j], &slice[j+1]); err != nil {
+					log.Fatal(err.Error())
+				}
 				swapped = true
 			}
 			if !swapped {
 				break
 			}
 		}
-		//log.Printf("Now: %v\n", slice)
 	}
 	fmt.Println("After:", slice)
 }

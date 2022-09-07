@@ -2,31 +2,13 @@ package common
 
 import "fmt"
 
-const (
-	defaultMapSize = 10
-)
-
-type HashNode struct {
-	Key   int
-	Value int
-	Next  *HashNode
-}
-
-func NewHashNode(key, value int) *HashNode {
-	return &HashNode{
-		Key:   key,
-		Value: value,
-		Next:  nil,
-	}
-}
-
 type HashMap struct {
-	Table []*HashNode
+	Table []*HashNodeList
 	Size  int
 }
 
 func NewHashMap(n int) *HashMap {
-	return &HashMap{Table: make([]*HashNode, n), Size: n}
+	return &HashMap{Table: make([]*HashNodeList, n), Size: n}
 }
 
 func NewHashMapFromSlice(s map[int]int) *HashMap {
@@ -55,7 +37,6 @@ func (h *HashMap) Insert(key, value int) {
 		}
 		curr.Next = NewHashNode(key, value)
 	}
-	h.Size++
 }
 
 func (h *HashMap) Get(key int) int {
@@ -64,8 +45,9 @@ func (h *HashMap) Get(key int) int {
 	if h.Table[k] != nil {
 		curr := h.Table[k]
 		for curr.Next != nil {
-			if curr.Key == key {
-				return curr.Value
+			if curr.Node.Key == key {
+				fmt.Printf("Value of %v is %v\n", key, curr.Node.Value)
+				return curr.Node.Value
 			}
 			curr = curr.Next
 		}
@@ -76,33 +58,23 @@ func (h *HashMap) Get(key int) int {
 func (h *HashMap) Delete(key int) {
 	k := h.hashFunction(key)
 
-	if h.Table[k].Key == key {
-		h.Size--
+	if h.Table[k].Node.Key == key {
 		h.Table[k] = h.Table[k].Next
 		return
 	}
 
 	curr := h.Table[k]
 	for curr != nil {
-		if curr.Next != nil && curr.Next.Key == key {
+		if curr.Next != nil && curr.Next.Node.Key == key {
 			curr.Next = curr.Next.Next
 		}
 		curr = curr.Next
 	}
-	h.Size--
 }
 
 func (h *HashMap) PrintHashMap() {
 	for i, m := range h.Table {
-		fmt.Println("Bucket", i)
-		if m == nil {
-			fmt.Println("Empty")
-		} else {
-			for m != nil {
-				fmt.Printf("Key: %v, Value: %v\n", m.Key, m.Value)
-				m = m.Next
-			}
-		}
-		fmt.Println("")
+		fmt.Printf("Bucket %v :: ", i)
+		m.PrintNodes()
 	}
 }

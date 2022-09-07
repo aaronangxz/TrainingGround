@@ -2,18 +2,6 @@ package common
 
 import "fmt"
 
-type HashNodeSingle struct {
-	Key   int
-	Value int
-}
-
-func NewHashNodeSingle(key, value int) *HashNodeSingle {
-	return &HashNodeSingle{
-		Key:   key,
-		Value: value,
-	}
-}
-
 type HashMapLinearProbing struct {
 	Table    []*HashNodeSingle
 	Size     int //current size
@@ -63,6 +51,7 @@ func (h *HashMapLinearProbing) Get(key int) int {
 		}
 
 		if h.Table[k].Key == key {
+			fmt.Printf("Value of %v is %v\n", key, h.Table[k].Value)
 			return h.Table[k].Value
 		}
 		k++
@@ -86,17 +75,8 @@ func (h *HashMapLinearProbing) Delete(key int) {
 
 func (h *HashMapLinearProbing) PrintHashMap() {
 	for i, n := range h.Table {
-		fmt.Println("Bucket", i)
-
-		if n == nil {
-			fmt.Println("Empty")
-		} else {
-			if n.Key == -1 {
-				fmt.Println("Deleted")
-			} else {
-				fmt.Printf("Key: %v, Value: %v\n", n.Key, n.Value)
-			}
-		}
-		fmt.Println("")
+		fmt.Printf("Bucket%v ", i)
+		n.PrintNode()
+		fmt.Println()
 	}
 }

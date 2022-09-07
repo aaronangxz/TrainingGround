@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/aaronangxz/TrainingGround/common"
 )
@@ -20,7 +21,9 @@ func SelectionSort(slice []int) {
 				min = j
 			}
 		}
-		common.Swap(&slice[i], &slice[min])
+		if err := common.SwapAny(&slice[i], &slice[min]); err != nil {
+			log.Fatal(err.Error())
+		}
 	}
 	fmt.Println("After:", slice)
 }

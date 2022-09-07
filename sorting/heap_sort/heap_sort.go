@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/aaronangxz/TrainingGround/common"
+	"log"
 )
 
 func heapify(s []int, n, i int) {
@@ -23,7 +24,9 @@ func heapify(s []int, n, i int) {
 
 	//if at the end largest is no longer root
 	if largest != i {
-		common.Swap(&s[largest], &s[i])
+		if err := common.SwapAny(&s[largest], &s[i]); err != nil {
+			log.Fatal(err.Error())
+		}
 		heapify(s, len(s), largest)
 	}
 }
@@ -36,7 +39,9 @@ func heapSort(s []int) {
 
 	//create max heap again on the reduced array
 	for i := len(s) - 1; i > 0; i-- {
-		common.Swap(&s[0], &s[i])
+		if err := common.SwapAny(&s[0], &s[i]); err != nil {
+			log.Fatal(err.Error())
+		}
 		//the last element is sorted, can ignore for now
 		heapify(s[:i], i, 0)
 	}

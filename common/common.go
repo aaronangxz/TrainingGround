@@ -1,15 +1,40 @@
 package common
 
 import (
+	"log"
 	"math/rand"
+	"reflect"
 	"sort"
 	"time"
+)
+
+const (
+	defaultMapSize = 10
 )
 
 func Swap(a *int, b *int) {
 	tmp := *a
 	*a = *b
 	*b = tmp
+}
+
+func SwapAny(a interface{}, b interface{}) error {
+	typeA := reflect.TypeOf(a)
+	typeB := reflect.TypeOf(b)
+
+	if typeA != typeB {
+		log.Println("SwapAny | ", ErrorInvalidValue)
+		return ErrorInvalidValue
+	}
+
+	valA := reflect.ValueOf(a).Elem()
+	valB := reflect.ValueOf(b).Elem()
+	tmp := valA.Interface()
+
+	valA.Set(valB)
+	valB.Set(reflect.ValueOf(tmp))
+
+	return nil
 }
 
 func MakeRandomIntKVMap(size int) map[int]int {

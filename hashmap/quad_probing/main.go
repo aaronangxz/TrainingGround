@@ -1,17 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"github.com/aaronangxz/TrainingGround/common"
 )
 
 func main() {
-	m := common.NewHashMap(10)
+	m := common.NewHashMapQuadProbing(10)
 	insertion(m)
 	get(m)
 	//batchCreate()
 	//batchCreateWithRandom()
 	remove(m)
-	m.PrintHashMap()
 }
 
 func batchCreate() {
@@ -31,22 +31,19 @@ func batchCreateWithRandom() {
 	m.PrintHashMap()
 }
 
-func insertion(m *common.HashMap) {
+func insertion(m *common.HashMapQuadProbing) {
 	m.Insert(5, 6969)
 	m.Insert(6, 6969)
 	m.Insert(26, 9999)
-	m.Insert(36, 9999)
-	m.Insert(46, 9999)
-	m.Insert(56, 9999)
-	m.Insert(56, 9999)
 	m.Insert(25, 1234)
 	m.PrintHashMap()
 }
 
-func get(m *common.HashMap) {
-	m.Get(26)
+func get(m *common.HashMapQuadProbing) {
+	fmt.Println(m.Get(26))
 }
 
-func remove(m *common.HashMap) {
+func remove(m *common.HashMapQuadProbing) {
 	m.Delete(26)
+	m.PrintHashMap()
 }
