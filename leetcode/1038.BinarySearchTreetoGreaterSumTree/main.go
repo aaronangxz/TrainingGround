@@ -3,7 +3,7 @@ package main
 import "github.com/aaronangxz/TrainingGround/common"
 
 func revInOrder(root *common.TreeNode, pre *int) *common.TreeNode {
-	//inorder traversal, but start from the right subtree
+	//inorder binary_tree, but start from the right subtree
 	if root.Right != nil {
 		revInOrder(root.Right, pre)
 	}
