@@ -15,7 +15,7 @@ func (b *BinarySearchTree) Insert(val int) {
 }
 
 func (b *BinarySearchTree) Delete(val int) {
-	deleteBSTNode(b.Tree.Node, val)
+	//deleteBSTNode(b.Tree.Node, val)
 }
 
 func insertBSTNode(root *TreeNode, val int) *TreeNode {
@@ -41,19 +41,19 @@ func minNode(root *TreeNode) *TreeNode {
 }
 
 //WIP
-func deleteBSTNode(root *TreeNode, val int) *TreeNode {
-	if root == nil {
-		return root
-	}
-	if val < root.Val {
-		root.Left = deleteBSTNode(root.Left, val)
-	} else if val > root.Val {
-		root.Right = deleteBSTNode(root.Right, val)
-	} else {
-		if root.Left == nil && root.Right == nil {
-			return nil
-		} else if root.Left == nil {
-
-		}
-	}
-}
+//func deleteBSTNode(root *TreeNode, val int) *TreeNode {
+//	if root == nil {
+//		return root
+//	}
+//	if val < root.Val {
+//		root.Left = deleteBSTNode(root.Left, val)
+//	} else if val > root.Val {
+//		root.Right = deleteBSTNode(root.Right, val)
+//	} else {
+//		if root.Left == nil && root.Right == nil {
+//			return nil
+//		} else if root.Left == nil {
+//
+//		}
+//	}
+//}

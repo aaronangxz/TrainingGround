@@ -59,6 +59,22 @@ func MakeSortedSlice(size int) []int {
 	return s
 }
 
+func MakeSorted2DSlice(x, y int) [][]int {
+	m := make([][]int, y)
+	for i := range m {
+		m[i] = make([]int, x)
+	}
+
+	start := 1
+	for i := 0; i < y; i++ {
+		for j := 0; j < x; j++ {
+			m[i][j] = start
+			start++
+		}
+	}
+	return m
+}
+
 func Max(a, b int) int {
 	if a > b {
 		return a
