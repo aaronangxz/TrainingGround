@@ -30,6 +30,11 @@ func (b *BinaryTree) PrintPostOrder() {
 	fmt.Println("Post-Order:", output)
 }
 
+func (b *BinaryTree) PrintLevelOrder() {
+	l := orderLevelTraversal(b.Node)
+	fmt.Println("Level-Order:", l)
+}
+
 func inOrderTraversal(root *TreeNode, output *[]int) {
 	if root == nil {
 		return
@@ -55,4 +60,37 @@ func postOrderTraversal(root *TreeNode, output *[]int) {
 	postOrderTraversal(root.Left, output)
 	postOrderTraversal(root.Right, output)
 	*output = append(*output, root.Val)
+}
+
+func orderLevelTraversal(root *TreeNode) [][]int {
+	var (
+		q   Queue
+		out [][]int
+	)
+	if root == nil {
+		return [][]int{}
+	}
+
+	q.Enqueue(root)
+
+	for !q.IsEmpty() {
+		var levelResult []int
+		size := len(q)
+
+		for i := 0; i < size; i++ {
+			node := q.Front().(*TreeNode)
+			q.Dequeue()
+			levelResult = append(levelResult, node.Val)
+
+			if node.Left != nil {
+				q.Enqueue(node.Left)
+			}
+
+			if node.Right != nil {
+				q.Enqueue(node.Right)
+			}
+		}
+		out = append(out, levelResult)
+	}
+	return out
 }
