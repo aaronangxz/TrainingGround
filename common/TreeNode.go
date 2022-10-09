@@ -16,6 +16,14 @@ func NewTreeNode(val int) *TreeNode {
 	}
 }
 
+func NewTreeNodeWithLeftRight(val int, left, right *TreeNode) *TreeNode {
+	return &TreeNode{
+		Val:   val,
+		Left:  left,
+		Right: right,
+	}
+}
+
 func (n *TreeNode) PrintNode() {
 	if n != nil {
 		fmt.Print(n.Val)
