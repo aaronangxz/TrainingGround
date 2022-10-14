@@ -15,9 +15,18 @@ func NewNode(d interface{}) *Node {
 }
 
 func (n *Node) PrintNodes() {
+	var nodes []interface{}
+
 	for n != nil {
-		fmt.Print(n.Data)
+		nodes = append(nodes, n.Data)
 		n = n.Next
+	}
+
+	for i, node := range nodes {
+		fmt.Print(node)
+		if i != len(nodes)-1 {
+			fmt.Print(" -> ")
+		}
 	}
 	fmt.Println()
 }
