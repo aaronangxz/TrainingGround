@@ -17,7 +17,7 @@ func longestPalindrome(s string) int {
 		longest += val / 2
 
 		//if any of them has a single element, we can use it as the centre char
-		if val%2 == 0 {
+		if val%2 != 0 {
 			hasOdd = true
 		}
 	}
