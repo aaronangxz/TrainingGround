@@ -1,22 +1,15 @@
 package main
 
-import (
-	"math"
-)
-
 func tupleSameProduct(nums []int) int {
-	sumMap := make(map[int][][]int)
-	for i := 0; i < len(nums)-1; i++ {
+	sumMap := make(map[int]int)
+	for i := 0; i < len(nums); i++ {
 		for j := i + 1; j < len(nums); j++ {
-			sumMap[nums[i]*nums[j]] = append(sumMap[nums[i]*nums[j]], []int{nums[i], nums[j]})
+			sumMap[nums[i]*nums[j]]++
 		}
 	}
 	combinations := 0
 	for _, m := range sumMap {
-		if len(m) < 2 {
-			continue
-		}
-		combinations += int(math.Pow(2, float64(len(m)))) * len(m)
+		combinations += (m - 1) * m * 4
 	}
 	return combinations
 }
