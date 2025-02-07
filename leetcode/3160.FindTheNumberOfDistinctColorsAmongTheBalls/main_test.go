@@ -15,8 +15,22 @@ func Test_queryResults(t *testing.T) {
 		args args
 		want []int
 	}{
-		// TODO: Add test cases.
-	}
+		{
+			name: "case 1",
+			args: args{
+				limit:   4,
+				queries: [][]int{{1, 4}, {2, 5}, {1, 3}, {3, 4}},
+			},
+			want: []int{1, 2, 2, 3},
+		},
+		{
+			name: "case 2",
+			args: args{
+				limit:   4,
+				queries: [][]int{{0, 1}, {1, 2}, {2, 2}, {3, 4}, {4, 5}},
+			},
+			want: []int{1, 2, 2, 3, 4},
+		}}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := queryResults(tt.args.limit, tt.args.queries); !reflect.DeepEqual(got, tt.want) {
