@@ -26,7 +26,7 @@ func preorderRecursive(root *common.ChildNode) []int {
 }
 
 func preorderIterative(root *common.ChildNode) []int {
-	var st common.Stack
+	st := common.Stack[*common.ChildNode]{}
 	var out []int
 
 	if root == nil {
@@ -39,7 +39,7 @@ func preorderIterative(root *common.ChildNode) []int {
 	//continue whenever stack is not empty
 	for !st.IsEmpty() {
 		//retrieve the top element, save into result and pop it
-		top := st.Top().(*common.ChildNode)
+		top := st.Top()
 		out = append(out, top.Data.(int))
 		st.Pop()
 

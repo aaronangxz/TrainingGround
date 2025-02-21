@@ -6,7 +6,7 @@ import (
 )
 
 func isValidParentheses(s string) bool {
-	var st common.Stack
+	st := common.Stack[rune]{}
 
 	for _, ss := range s {
 		//push into stack if it is an opening parenthesis
@@ -19,7 +19,7 @@ func isValidParentheses(s string) bool {
 			}
 
 			//get the top element
-			top := st.Top().(rune)
+			top := st.Top()
 
 			//if any of these doesn't match
 			if (ss == ')' && top != '(') || (ss == ']' && top != '[') || (ss == '}' && top != '{') {

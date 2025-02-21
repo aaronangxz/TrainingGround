@@ -22,7 +22,7 @@ func recurse(root *common.TreeNode, visited []*common.TreeNode) []*common.TreeNo
 
 func IterativeDfs(root *common.TreeNode) []*common.TreeNode {
 	//Stack to store elements to visit
-	var s common.Stack
+	s := common.Stack[*common.TreeNode]{}
 
 	//Store root node first
 	s.Push(root)
@@ -33,7 +33,7 @@ func IterativeDfs(root *common.TreeNode) []*common.TreeNode {
 	//Continue as long as stack is not empty
 	for !s.IsEmpty() {
 		//Visit the top element in stack
-		node := s.Top().(*common.TreeNode)
+		node := s.Top()
 		visited = append(visited, node)
 
 		//pop the last element

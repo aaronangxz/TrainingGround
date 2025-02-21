@@ -6,7 +6,7 @@ import (
 )
 
 func removeDuplicates(s string) string {
-	var st common.Stack
+	st := common.Stack[rune]{}
 
 	//Push 1st char onto stack first
 	st.Push(rune(s[0]))
@@ -16,7 +16,7 @@ func removeDuplicates(s string) string {
 
 	for _, ss := range s {
 		//Only if stack is not empty, pop when we found another same char
-		if !st.IsEmpty() && ss == st.Top().(rune) {
+		if !st.IsEmpty() && ss == st.Top() {
 			st.Pop()
 			continue
 		}
@@ -26,8 +26,8 @@ func removeDuplicates(s string) string {
 	}
 
 	out := ""
-	for _, sts := range st {
-		out += string(sts.(rune))
+	for _, elem := range st.Elements() {
+		out += string(elem)
 	}
 	return out
 }
