@@ -21,7 +21,7 @@ func validateStackSequencesConstSpace(pushed []int, popped []int) bool {
 }
 
 func validateStackSequencesWithStack(pushed []int, popped []int) bool {
-	var st common.Stack
+	st := common.Stack[int]{}
 	i := 0
 
 	//simulate push and pop of a stack and compare with the popped slice
@@ -30,7 +30,7 @@ func validateStackSequencesWithStack(pushed []int, popped []int) bool {
 
 		//when the top is equals to the element in popped slice
 		//pop the stack and continue to check for the next element
-		for !st.IsEmpty() && st.Top().(int) == popped[i] {
+		for !st.IsEmpty() && st.Top() == popped[i] {
 			st.Pop()
 			i++
 		}

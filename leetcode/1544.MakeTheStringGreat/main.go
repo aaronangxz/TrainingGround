@@ -6,7 +6,7 @@ import (
 )
 
 func makeGood(s string) string {
-	var st common.Stack
+	st := common.Stack[rune]{}
 	st.Push(rune(s[0]))
 	s = s[1:]
 
@@ -16,7 +16,7 @@ func makeGood(s string) string {
 			continue
 		}
 
-		if st.Top().(rune)-c == 32 || st.Top().(rune)-c == -32 {
+		if st.Top()-c == 32 || st.Top()-c == -32 {
 			st.Pop()
 		} else {
 			st.Push(c)
@@ -24,8 +24,8 @@ func makeGood(s string) string {
 	}
 
 	out := ""
-	for _, sts := range st {
-		out += string(sts.(rune))
+	for _, elem := range st.Elements() {
+		out += string(elem)
 	}
 	return out
 }

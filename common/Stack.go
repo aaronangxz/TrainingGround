@@ -1,31 +1,38 @@
 package common
 
-type Stack []interface{}
-
-//Helper function to check if stack is empty
-func (s *Stack) IsEmpty() bool {
-	return len(*s) == 0
+type Stack[T any] struct {
+	elements []T
 }
 
-//Push the new element onto the stack
-func (s *Stack) Push(e interface{}) {
-	*s = append(*s, e)
+// IsEmpty Helper function to check if stack is empty
+func (s *Stack[T]) IsEmpty() bool {
+	return len(s.elements) == 0
 }
 
-//Removes the element on the top of the stack
-func (s *Stack) Pop() {
+// Push the new element onto the stack
+func (s *Stack[T]) Push(e T) {
+	s.elements = append(s.elements, e)
+}
+
+// Pop Removes the element on the top of the stack
+func (s *Stack[T]) Pop() {
 	if s.IsEmpty() {
 		return
 	}
-	index := len(*s) - 1
-	*s = (*s)[:index]
+	index := len(s.elements) - 1
+	s.elements = s.elements[:index]
 }
 
-//Returns the element on top of the stack
-func (s *Stack) Top() interface{} {
+// Top Returns the element on top of the stack
+func (s *Stack[T]) Top() T {
+	var zero T
 	if s.IsEmpty() {
-		return nil
+		return zero
 	}
-	index := len(*s) - 1
-	return (*s)[index]
+	index := len(s.elements) - 1
+	return s.elements[index]
+}
+
+func (s *Stack[T]) Elements() []T {
+	return append([]T(nil), s.elements...) // Safe copy
 }
