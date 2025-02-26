@@ -45,6 +45,12 @@ func (s *Stack[T]) Top() T {
 	return s.elements[index]
 }
 
+func (s *Stack[T]) PopTop() T {
+	v := s.Top()
+	s.Pop()
+	return v
+}
+
 func (s *Stack[T]) Elements() []T {
 	return append([]T(nil), s.elements...) // Safe copy
 }
