@@ -1,57 +1,43 @@
 package main
 
-import (
-	"fmt"
-	"sort"
-)
+import "slices"
 
 func threeSum(nums []int) [][]int {
+	// Sort the slice in ASC first
+	slices.Sort(nums)
 	var res [][]int
-	sort.Ints(nums)
-	fmt.Println(nums)
 
-	for i := 0; i < len(nums); i++ {
-		//negative because we want to find target + front + back = 0 -> front + back = -target
-		target := -nums[i]
-		fmt.Println(target)
-
-		//Range to find should be right after the current element, until the end
-		front := i + 1
-		back := len(nums) - 1
-
-		for front < back {
-			sum := nums[front] + nums[back]
-
-			//because it is sorted, so when it is smaller / greater we just move forward / backwards
-			if sum < target {
-				front++
-			} else if sum > target {
-				back--
+	for i, n := range nums {
+		// Ignore duplicate nums, since we have already checked any combination starting with it before
+		if i != 0 && n == nums[i-1] {
+			continue
+		}
+		//          [1,2,3,4,5,6]
+		// fix here _^ ^______^ do two pointers 2Sum
+		// Doing 2Sum with two pointers, starting from the next idx
+		l, r := i+1, len(nums)-1
+		// Left can never exceed Right
+		for l < r {
+			threeSums := n + nums[l] + nums[r]
+			if threeSums > 0 {
+				// > 0, we can easily decrease the sum by moving r
+				// since slice is sorted, it is guaranteed to be smaller once moved
+				r--
+			} else if threeSums < 0 {
+				// < 0, we can easily increase the sum by moving l
+				// since slice is sorted, it is guaranteed to be greater once moved
+				l++
 			} else {
-				threeSome := []int{nums[i], nums[front], nums[back]}
-				res = append(res, threeSome)
-
-				//Skip the next duplicate element, if available
-				for front < back && nums[front] == threeSome[1] {
-					front++
-				}
-
-				//Skip the next duplicate element, if available
-				for front < back && nums[back] == threeSome[2] {
-					back--
+				// Found the combination that equals to 0
+				res = append(res, []int{n, nums[l], nums[r]})
+				// Moving to next 2Sum left
+				l++
+				// Same as above, we ignore the same elements that have been checked
+				for nums[l] == nums[l-1] && l < r {
+					l++
 				}
 			}
 		}
-
-		//Skip the next duplicate element, if available
-		for i+1 < len(nums) && nums[i+1] == nums[i] {
-			i++
-		}
 	}
 	return res
-}
-
-func main() {
-	nums := []int{-1, 0, 1, 2, -1, -4}
-	fmt.Println(threeSum(nums))
 }
