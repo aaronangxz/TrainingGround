@@ -1,41 +1,23 @@
 package main
 
-import "github.com/aaronangxz/TrainingGround/common"
-
-func addTwoNumbers(l1 *common.Node, l2 *common.Node) *common.Node {
-	//create a new list, summed values will be inserted here
-	newList := common.NewNode(0)
-	curr := newList
-	carry := 0
-
-	for l1 != nil || l2 != nil || carry == 1 {
+func countLargestGroup(n int) int {
+	m := make(map[int]int)
+	max := 0
+	for i := 1; i <= n; i++ {
 		sum := 0
-		//increment sums from l1 and l2
-		if l1 != nil {
-			sum += l1.Data.(int)
-			l1 = l1.Next
+		for x := i; x > 0; x /= 10 {
+			sum += x % 10
 		}
-		if l2 != nil {
-			sum += l2.Data.(int)
-			l2 = l2.Next
+		m[sum]++
+		if m[sum] > max {
+			max = m[sum]
 		}
-
-		//adding on the carry value
-		sum += carry
-
-		//update the next carry value
-		carry = sum / 10
-
-		//insert the new sum, modulo by 10
-		newNode := common.NewNode(sum % 10)
-		curr.Next = newNode
-		curr = curr.Next
 	}
-	return newList.Next
-}
-
-func main() {
-	addTwoNumbers(common.NewNodeFromSlice([]int{2, 4, 3}), common.NewNodeFromSlice([]int{5, 6, 4})).PrintNodes()
-	addTwoNumbers(common.NewNodeFromSlice([]int{0}), common.NewNodeFromSlice([]int{0})).PrintNodes()
-	addTwoNumbers(common.NewNodeFromSlice([]int{9, 9, 9, 9, 9, 9, 9}), common.NewNodeFromSlice([]int{9, 9, 9, 9})).PrintNodes()
+	count := 0
+	for _, v := range m {
+		if v == max {
+			count++
+		}
+	}
+	return count
 }
