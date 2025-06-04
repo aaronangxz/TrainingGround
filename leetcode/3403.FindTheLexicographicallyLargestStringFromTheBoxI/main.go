@@ -1,22 +1,23 @@
 package main
 
-func answerString(word string, n int) string {
-	if n == 1 {
+func answerString(word string, numFriends int) string {
+	if numFriends == 1 {
 		return word
 	}
-
+	n := len(word) - numFriends + 1
 	ans := ""
-	m := len(word)
-	mxPartLen := m - n + 1
 
-	for i := 0; i < m; i++ {
-		tmp := ""
-		for j := i; j < min(i+mxPartLen, m); j++ {
-			tmp += string(word[j])
+	for c := 'z'; c >= 'a'; c-- {
+		found := false
+		for i := 0; i < len(word); i++ {
+			if rune(word[i]) != c {
+				continue
+			}
+			found = true
+			ans = max(ans, word[i:min(len(word), i+n)])
 		}
-
-		if tmp > ans {
-			ans = tmp
+		if found {
+			break
 		}
 	}
 
