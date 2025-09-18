@@ -1,78 +1,97 @@
 package main
 
-import "container/heap"
+import (
+	"container/heap"
+)
 
-type Task struct {
-	userId   int
-	taskId   int
+type TaskEntry struct {
 	priority int
+	taskId   int
 }
 
-type TaskHeap []Task
+type MaxHeap []TaskEntry
 
-func (h TaskHeap) Len() int { return len(h) }
-func (h TaskHeap) Less(i, j int) bool {
-	if h[i].priority == h[j].priority {
-		return h[i].taskId > h[j].taskId // higher taskId wins
+func (h MaxHeap) Len() int { return len(h) }
+func (h MaxHeap) Less(i, j int) bool {
+	if h[i].priority != h[j].priority {
+		return h[i].priority > h[j].priority
 	}
-	return h[i].priority > h[j].priority // higher priority wins
+	return h[i].taskId > h[j].taskId
 }
-func (h TaskHeap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
-func (h *TaskHeap) Push(x any)   { *h = append(*h, x.(Task)) }
-func (h *TaskHeap) Pop() any {
+func (h MaxHeap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+
+func (h *MaxHeap) Push(x interface{}) {
+	*h = append(*h, x.(TaskEntry))
+}
+
+func (h *MaxHeap) Pop() interface{} {
 	old := *h
 	n := len(old)
 	x := old[n-1]
-	*h = old[:n-1]
+	*h = old[0 : n-1]
 	return x
 }
 
 type TaskManager struct {
-	h      TaskHeap
-	record map[int]Task
+	taskToUser     map[int]int
+	taskToPriority map[int]int
+	maxHeap        *MaxHeap
 }
 
 func Constructor(tasks [][]int) TaskManager {
 	tm := TaskManager{
-		h:      TaskHeap{},
-		record: make(map[int]Task),
+		taskToUser:     make(map[int]int),
+		taskToPriority: make(map[int]int),
+		maxHeap:        &MaxHeap{},
 	}
-	heap.Init(&tm.h)
-	for _, t := range tasks {
-		tm.Add(t[0], t[1], t[2])
+	heap.Init(tm.maxHeap)
+
+	for _, task := range tasks {
+		userId, taskId, priority := task[0], task[1], task[2]
+		tm.taskToUser[taskId] = userId
+		tm.taskToPriority[taskId] = priority
+		heap.Push(tm.maxHeap, TaskEntry{priority, taskId})
 	}
+
 	return tm
 }
 
-func (tm *TaskManager) Add(userId, taskId, priority int) {
-	task := Task{userId, taskId, priority}
-	heap.Push(&tm.h, task)
-	tm.record[taskId] = task
+func (this *TaskManager) Add(userId int, taskId int, priority int) {
+	this.taskToUser[taskId] = userId
+	this.taskToPriority[taskId] = priority
+	heap.Push(this.maxHeap, TaskEntry{priority, taskId})
 }
 
-func (tm *TaskManager) Edit(taskId, newPriority int) {
-	old := tm.record[taskId]
-	updated := Task{old.userId, taskId, newPriority}
-	heap.Push(&tm.h, updated)
-	tm.record[taskId] = updated
+func (this *TaskManager) Edit(taskId int, newPriority int) {
+	this.taskToPriority[taskId] = newPriority
+	heap.Push(this.maxHeap, TaskEntry{newPriority, taskId})
 }
 
-func (tm *TaskManager) Rmv(taskId int) {
-	delete(tm.record, taskId)
+func (this *TaskManager) Rmv(taskId int) {
+	delete(this.taskToUser, taskId)
+	delete(this.taskToPriority, taskId)
 }
 
-func (tm *TaskManager) ExecTop() int {
-	for tm.h.Len() > 0 {
-		top := heap.Pop(&tm.h).(Task)
-		latest, ok := tm.record[top.taskId]
-		if !ok {
-			continue
+func (this *TaskManager) ExecTop() int {
+	// Lazy cleanup until finding valid task
+	for this.maxHeap.Len() > 0 {
+		entry := (*this.maxHeap)[0]
+		taskId := entry.taskId
+		priority := entry.priority
+
+		// Check if task exists and priority is current
+		if currentPriority, exists := this.taskToPriority[taskId]; exists && currentPriority == priority {
+			// Valid task found, execute it
+			heap.Pop(this.maxHeap)
+			userId := this.taskToUser[taskId]
+			delete(this.taskToUser, taskId)
+			delete(this.taskToPriority, taskId)
+			return userId
 		}
-		if latest.priority != top.priority {
-			continue
-		}
-		delete(tm.record, top.taskId)
-		return top.userId
+
+		// Remove outdated entry
+		heap.Pop(this.maxHeap)
 	}
-	return -1
+
+	return -1 // No valid tasks
 }
