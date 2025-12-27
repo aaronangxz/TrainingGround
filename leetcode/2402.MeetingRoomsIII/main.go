@@ -1,11 +1,8 @@
 package main
 
 import (
-	"sort"
-)
-
-import (
 	"container/heap"
+	"sort"
 )
 
 type IntHeap []int
